@@ -1,0 +1,73 @@
+Shadowing Combinations
+..Solar Distribution=FullExteriorWithReflectionsFromExteriorSurfaces
+..In the following, only the first 10 reference surfaces will be shown.
+..But all surfaces are used in the calculations.
+==================================
+Surface=EAST WINDOW OVERHANG is used as Receiving Surface in calculations and is convex.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=Mir-EAST WINDOW OVERHANG is used as Receiving Surface in calculations and is convex.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=WEST WINDOW OVERHANG is used as Receiving Surface in calculations and is convex.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=Mir-WEST WINDOW OVERHANG is used as Receiving Surface in calculations and is convex.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=ZONE SURFACE NORTH is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=ZONE SURFACE EAST is used as Receiving Surface in calculations and is convex.
+Number of general casting surfaces=1
+..Surface=Mir-EAST WINDOW OVERHANG
+Number of back surfaces=0
+Number of receiving sub surfaces=1
+....Surface=ZONE SUBSURFACE 1 EAST WINDOW
+==================================
+Surface=ZONE SUBSURFACE 1 EAST WINDOW is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=ZONE SURFACE SOUTH is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=ZONE SURFACE WEST is used as Receiving Surface in calculations and is convex.
+Number of general casting surfaces=1
+..Surface=Mir-WEST WINDOW OVERHANG
+Number of back surfaces=0
+Number of receiving sub surfaces=1
+....Surface=ZONE SUBSURFACE 2 WEST WINDOW
+==================================
+Surface=ZONE SUBSURFACE 2 WEST WINDOW is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=ZONE SURFACE FLOOR is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=ZONE SURFACE CEILING is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=HALLWAY WALL is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0

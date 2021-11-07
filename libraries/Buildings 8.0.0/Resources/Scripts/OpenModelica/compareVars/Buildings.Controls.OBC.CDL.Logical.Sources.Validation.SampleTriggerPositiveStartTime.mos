@@ -1,0 +1,9 @@
+compareVars :=
+  {
+    "samTri.y",
+    "triggeredSampler.u",
+    "triggeredSampler.y",
+    "samTri1.y",
+    "triggeredSampler1.u",
+    "triggeredSampler1.y"
+  };

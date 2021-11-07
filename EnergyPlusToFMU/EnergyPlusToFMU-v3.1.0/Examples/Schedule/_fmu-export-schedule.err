@@ -1,0 +1,38 @@
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2021.10.27 13:48,
+   ** Warning ** Version: in IDF="9.4" not the same as expected="9.5"
+   ** Warning ** Version: in IDF="9.4" not the same as expected="9.5"
+   ** Warning ** Weather file location will be used rather than entered (IDF) Location object.
+   **   ~~~   ** ..Location object=CHICAGO ILLINOIS
+   **   ~~~   ** ..Weather File Location=El Paso International Ap  Ut TX USA TMY3 WMO#=722700
+   **   ~~~   ** ..due to location differences, Latitude difference=[10.01] degrees, Longitude difference=[18.75] degrees.
+   **   ~~~   ** ..Time Zone difference=[1.0] hour(s), Elevation difference=[524.21] percent, [996.00] meters.
+   ** Warning ** SetUpDesignDay: Entered DesignDay Barometric Pressure=99063 differs by more than 10% from Standard Barometric Pressure=87865.
+   **   ~~~   ** ...occurs in DesignDay=CHICAGO_IL_USA ANNUAL HEATING 99% DESIGN CONDITIONS DB, Standard Pressure (based on elevation) will be used.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:FunctionalMockupUnitExport:To:Schedule="FMU_OTHEQU_ZONEONE", Schedule Type Limits Names="FRACTION" not found -- will not be validated
+   ** Warning ** GetSurfaceData: CAUTION -- Interzone surfaces are occuring in the same zone(s).
+   **   ~~~   ** ...use Output:Diagnostics,DisplayExtraWarnings; to show more details on individual occurrences.
+   ** Warning ** SetUpDesignDay: Entered DesignDay Barometric Pressure=99063 differs by more than 10% from Standard Barometric Pressure=87865.
+   **   ~~~   ** ...occurs in DesignDay=CHICAGO_IL_USA ANNUAL COOLING 1% DESIGN CONDITIONS DB/MCWB, Standard Pressure (based on elevation) will be used.
+   ************* Testing Individual Branch Integrity
+   ************* All Branches passed integrity testing
+   ************* Testing Individual Supply Air Path Integrity
+   ************* All Supply Air Paths passed integrity testing
+   ************* Testing Individual Return Air Path Integrity
+   ************* All Return Air Paths passed integrity testing
+   ************* No node connection errors were found.
+   ************* Beginning Simulation
+   ** Severe  ** ExternalInterface: Did not find file "socket.cfg".
+   **   ~~~   ** This file needs to be in same directory as in.idf.
+   **   ~~~   ** Check the documentation for the ExternalInterface.
+   **  Fatal  ** Error in ExternalInterface: Check EnergyPlus *.err file.
+   ...Summary of Errors that led to program termination:
+   ..... Reference severe error count=1
+   ..... Last severe error=ExternalInterface: Did not find file "socket.cfg".
+   *************
+   ************* ===== Final Error Summary =====
+   ************* The following error categories occurred.  Consider correcting or noting.
+   ************* Interzone surfaces - different zones
+   *************
+   ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 1 Severe Errors.
+   ************* EnergyPlus Sizing Error Summary. During Sizing: 0 Warning; 0 Severe Errors.
+   ************* EnergyPlus Terminated--Fatal Error Detected. 7 Warning; 1 Severe Errors; Elapsed Time=00hr 00min  0.40sec
