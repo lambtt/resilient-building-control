@@ -1,5 +1,4 @@
 # co-simulation_fmus
-co-simulation between e+ and dymola
 TEES_PVPanels.fmu in ElectricalModel is called in co-simu.py and the co-simulation failed.
 It has one input interface(Load) and one output interface(power).
 This fmu just consists of PVPanels.
