@@ -563,10 +563,6 @@ First implementation.
       EMax=180000000,
       V_nominal=120) "Battery with losses for AC/DC conversion"
       annotation (Placement(transformation(extent={{78,-76},{98,-56}})));
-    Favorites.Buildings.Controls.OBC.CDL.Continuous.Sources.Constant TestLoad(k=-2000)
-      "Load consumed from the house" annotation (Placement(transformation(
-            extent={{-120,-104},{-104,-88}}), iconTransformation(extent={{54,-180},
-              {80,-154}})));
     Modelica.Blocks.Math.Add add
       annotation (Placement(transformation(extent={{60,24},{80,44}})));
     Modelica.Blocks.Logical.And and1
@@ -612,6 +608,8 @@ First implementation.
             extent={{-10,-112},{12,-90}})));
     Modelica.Blocks.Math.Gain gain(k=-1)
       annotation (Placement(transformation(extent={{32,-108},{46,-94}})));
+    Modelica.Blocks.Interfaces.RealOutput soc
+      annotation (Placement(transformation(extent={{78,-118},{98,-98}})));
   equation
     connect(grid.terminal,RL. terminal)
                                        annotation (Line(
@@ -699,6 +697,8 @@ First implementation.
                            color={0,0,127}));
     connect(gain.y, add.u2) annotation (Line(points={{46.7,-101},{56,-101},{56,
             28},{58,28}}, color={0,0,127}));
+    connect(bat_loss_acdc.SOC, soc) annotation (Line(points={{97.1667,-61.4545},
+            {104,-61.4545},{104,-92},{88,-92},{88,-108}}, color={0,0,127}));
     annotation (Diagram(coordinateSystem(extent={{-160,-120},{320,140}})), Icon(
           coordinateSystem(extent={{-160,-120},{320,140}})),
       experiment(StopTime=31536000, __Dymola_Algorithm="Dassl"));
