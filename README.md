@@ -1,9 +1,5 @@
 # co-simulation_fmus
+co-simulation between e+ and dymola
 
-PVPanels is called in co-simu.py and the co-simulation failed.
-It has one input interface(Load) and one output interface(power).
-
-
-PV_Battery consists of PVPanels and battery. 
-It has one input interface(Load) and two output interfaces(power, soc)
-
+This branch is for state-graph control in models.
+When finished, it need to be merged into the master branch.
