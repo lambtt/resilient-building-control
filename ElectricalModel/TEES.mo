@@ -1,228 +1,6 @@
 within ;
 package TEES
 
-  model PVPanels "This example illustrates how to use PV panel models"
-    extends Modelica.Icons.Example;
-    Buildings.Electrical.AC.OnePhase.Loads.Inductive RL(mode=Buildings.Electrical.Types.Load.VariableZ_y_input,
-      P_nominal=-1000,
-      V_nominal=120) "Load taht consumes the power generted by the PVs"
-      annotation (Placement(transformation(extent={{20,-52},{40,-32}})));
-
-    Buildings.Electrical.AC.OnePhase.Sources.Grid grid(f=60, V=120)
-      "Electrical grid model"
-             annotation (Placement(transformation(extent={{-60,-20},{-40,0}})));
-    Buildings.BoundaryConditions.SolarIrradiation.DiffusePerez HDifTil(
-      til=0.34906585039887,
-      lat=0.65798912800186,
-      azi=-0.78539816339745) "Diffuse irradiation on tilted surface"
-      annotation (Placement(transformation(extent={{-52,72},{-32,92}})));
-    Buildings.BoundaryConditions.SolarIrradiation.DirectTiltedSurface HDirTil(
-      til=0.34906585039887,
-      lat=0.65798912800186,
-      azi=-0.78539816339745) "Direct irradiation on tilted surface"
-      annotation (Placement(transformation(extent={{-52,32},{-32,52}})));
-    Buildings.BoundaryConditions.WeatherData.ReaderTMY3 weaDat(
-        computeWetBulbTemperature=false, filNam=
-          Modelica.Utilities.Files.loadResource(
-          "modelica://Buildings/Resources/weatherdata/USA_CA_San.Francisco.Intl.AP.724940_TMY3.mos"))
-      annotation (Placement(transformation(extent={{-100,72},{-80,92}})));
-    Modelica.Blocks.Math.Add G "Total irradiation on tilted surface"
-      annotation (Placement(transformation(extent={{-12,52},{8,72}})));
-    Buildings.Electrical.AC.OnePhase.Sources.PVSimple pvSimple(A=10, V_nominal=
-          120) "PV array simplified"
-      annotation (Placement(transformation(extent={{40,0},{60,20}})));
-    Modelica.Blocks.Interfaces.RealInput Load "Load consumed from the house"
-      annotation (Placement(transformation(extent={{-110,-12},{-70,28}})));
-    Modelica.Blocks.Interfaces.RealOutput power "power generated from PVPanels"
-      annotation (Placement(transformation(extent={{80,-36},{100,-16}})));
-  equation
-    connect(grid.terminal, RL.terminal)
-                                       annotation (Line(
-        points={{-50,-18.3333},{-50,-42},{21.6667,-42}},
-        color={0,120,120},
-        smooth=Smooth.None));
-    connect(weaDat.weaBus,HDifTil. weaBus) annotation (Line(
-        points={{-80,82},{-52,82}},
-        color={255,204,51},
-        thickness=0.5,
-        smooth=Smooth.None));
-    connect(weaDat.weaBus,HDirTil. weaBus) annotation (Line(
-        points={{-80,82},{-66,82},{-66,42},{-52,42}},
-        color={255,204,51},
-        thickness=0.5,
-        smooth=Smooth.None));
-    connect(HDifTil.H,G. u1) annotation (Line(
-        points={{-31,82},{-24,82},{-24,68},{-14,68}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(HDirTil.H,G. u2) annotation (Line(
-        points={{-31,42},{-24,42},{-24,56},{-14,56}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(G.y,pvSimple. G) annotation (Line(
-        points={{9,62},{50,62},{50,22}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(pvSimple.terminal, RL.terminal) annotation (Line(
-        points={{41.6667,10},{21.6667,10},{21.6667,-42}},
-        color={0,120,120},
-        smooth=Smooth.None));
-    connect(Load, RL.y) annotation (Line(points={{-90,8},{-90,-58},{48,-58},{48,
-            -42},{38.3333,-42}},
-                            color={0,0,127}));
-    connect(pvSimple.P, power) annotation (Line(points={{59.1667,17},{94,17},{
-            94,-26},{90,-26}},
-                       color={0,0,127}));
-    connect(power, power)
-      annotation (Line(points={{90,-26},{90,-26}}, color={0,0,127}));
-    annotation (experiment(
-        StopTime=31536000,
-        Tolerance=1e-06,
-        __Dymola_Algorithm="Dassl"),
-      __Dymola_Commands(file=
-            "modelica://Buildings/Resources/Scripts/Dymola/Electrical/AC/OnePhase/Sources/Examples/PVPanels.mos"
-          "Simulate and plot"),
-      Documentation(revisions="<html>
-<ul>
-<li>
-August 5, 2014, by Marco Bonvini:<br/>
-Revised model and documentation.
-</li>
-</ul>
-</html>",   info="<html>
-<p>
-This example shows how to use a simple PV model without orientation
-as well a PV model with orientation. The power produced by the PV is
-partially consumed by the load while the remaining part is fed into
-the grid.
-</p>
-</html>"));
-  end PVPanels;
-
-  model Original_PVPanels "This example illustrates how to use PV panel models"
-    extends Modelica.Icons.Example;
-    Buildings.Electrical.AC.OnePhase.Loads.Inductive RL(mode=Buildings.Electrical.Types.Load.VariableZ_y_input,
-        P_nominal=-2000,
-      V_nominal=120) "Load taht consumes the power generted by the PVs"
-      annotation (Placement(transformation(extent={{20,-50},{40,-30}})));
-    Buildings.Electrical.AC.OnePhase.Sources.Grid grid(f=60, V=120)
-      "Electrical grid model"
-             annotation (Placement(transformation(extent={{-60,-20},{-40,0}})));
-    Modelica.Blocks.Sources.Constant  load(k=0.8) "Load consumption"
-      annotation (Placement(transformation(extent={{78,-50},{58,-30}})));
-    Buildings.BoundaryConditions.SolarIrradiation.DiffusePerez HDifTil(
-      til=0.34906585039887,
-      lat=0.65798912800186,
-      azi=-0.78539816339745) "Diffuse irradiation on tilted surface"
-      annotation (Placement(transformation(extent={{-52,72},{-32,92}})));
-    Buildings.BoundaryConditions.SolarIrradiation.DirectTiltedSurface HDirTil(
-      til=0.34906585039887,
-      lat=0.65798912800186,
-      azi=-0.78539816339745) "Direct irradiation on tilted surface"
-      annotation (Placement(transformation(extent={{-52,32},{-32,52}})));
-    Buildings.BoundaryConditions.WeatherData.ReaderTMY3 weaDat(
-        computeWetBulbTemperature=false, filNam=
-          Modelica.Utilities.Files.loadResource(
-          "modelica://Buildings/Resources/weatherdata/USA_CA_San.Francisco.Intl.AP.724940_TMY3.mos"))
-      annotation (Placement(transformation(extent={{-100,72},{-80,92}})));
-    Modelica.Blocks.Math.Add G "Total irradiation on tilted surface"
-      annotation (Placement(transformation(extent={{-12,52},{8,72}})));
-    Buildings.Electrical.AC.OnePhase.Sources.PVSimple pvSimple(A=10, V_nominal=
-          120) "PV array simplified"
-      annotation (Placement(transformation(extent={{40,0},{60,20}})));
-    Buildings.Electrical.AC.OnePhase.Sources.PVSimpleOriented pvOriented(
-      A=10,
-      til=0.34906585039887,
-      lat=0.65798912800186,
-      azi=-0.78539816339745,
-      V_nominal=120) "PV array oriented"
-      annotation (Placement(transformation(extent={{-10,0},{10,20}})));
-  equation
-    connect(grid.terminal, RL.terminal)
-                                       annotation (Line(
-        points={{-50,-20.2},{-50,-40},{20,-40}},
-        color={0,120,120},
-        smooth=Smooth.None));
-    connect(load.y, RL.y)
-                         annotation (Line(
-        points={{57,-40},{40,-40}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(weaDat.weaBus,HDifTil. weaBus) annotation (Line(
-        points={{-80,82},{-52,82}},
-        color={255,204,51},
-        thickness=0.5,
-        smooth=Smooth.None));
-    connect(weaDat.weaBus,HDirTil. weaBus) annotation (Line(
-        points={{-80,82},{-66,82},{-66,42},{-52,42}},
-        color={255,204,51},
-        thickness=0.5,
-        smooth=Smooth.None));
-    connect(HDifTil.H,G. u1) annotation (Line(
-        points={{-31,82},{-24,82},{-24,68},{-14,68}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(HDirTil.H,G. u2) annotation (Line(
-        points={{-31,42},{-24,42},{-24,56},{-14,56}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(G.y,pvSimple. G) annotation (Line(
-        points={{9,62},{50,62},{50,22}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(pvSimple.terminal, RL.terminal) annotation (Line(
-        points={{40,10},{20,10},{20,-40}},
-        color={0,120,120},
-        smooth=Smooth.None));
-    connect(weaDat.weaBus, pvOriented.weaBus) annotation (Line(
-        points={{-80,82},{-66,82},{-66,26},{4.44089e-16,26},{4.44089e-16,19}},
-        color={255,204,51},
-        thickness=0.5,
-        smooth=Smooth.None));
-    connect(pvOriented.terminal, RL.terminal) annotation (Line(
-        points={{-10,10},{-28,10},{-28,-40},{20,-40}},
-        color={0,120,120},
-        smooth=Smooth.None));
-    annotation (experiment(
-        StopTime=31536000,
-        Tolerance=1e-06,
-        __Dymola_Algorithm="Dassl"),
-      __Dymola_Commands(file=
-            "modelica://Buildings/Resources/Scripts/Dymola/Electrical/AC/OnePhase/Sources/Examples/PVPanels.mos"
-          "Simulate and plot"),
-      Documentation(revisions="<html>
-<ul>
-<li>
-August 5, 2014, by Marco Bonvini:<br/>
-Revised model and documentation.
-</li>
-</ul>
-</html>",   info="<html>
-<p>
-This example shows how to use a simple PV model without orientation
-as well a PV model with orientation. The power produced by the PV is
-partially consumed by the load while the remaining part is fed into
-the grid.
-</p>
-</html>"));
-  end Original_PVPanels;
-
-  model PVTest
-    extends Modelica.Icons.Example;
-    PVPanels pVPanels
-      annotation (Placement(transformation(extent={{30,-32},{50,-12}})));
-    Modelica.Blocks.Sources.TimeTable timeTable(table=[0,0.1; 100,0.3; 200,0.9])
-      annotation (Placement(transformation(extent={{-92,4},{-72,24}})));
-    Modelica.Blocks.Sources.RealExpression realExpression(y=0.5)
-      annotation (Placement(transformation(extent={{-72,50},{-52,70}})));
-  equation
-    connect(realExpression.y, pVPanels.Load) annotation (Line(points={{-51,60},
-            {-18,60},{-18,-21.2},{31,-21.2}}, color={0,0,127}));
-    annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
-          coordinateSystem(preserveAspectRatio=false)),
-      experiment(StopTime=31536000, __Dymola_Algorithm="Dassl"));
-  end PVTest;
-
   model Original_AcBattery "This example shows how to use the AC battery model"
     extends Modelica.Icons.Example;
     Buildings.Electrical.AC.OnePhase.Storage.Battery bat_ideal(
@@ -259,27 +37,27 @@ the grid.
       annotation (Placement(transformation(extent={{20,-40},{40,-20}})));
   equation
     connect(fixVol.terminal, bat_ideal.terminal) annotation (Line(
-        points={{-22,0},{0,0},{0,31.0909},{21.6667,31.0909}},
+        points={{-22,0},{0,0},{0,32},{20,32}},
         color={0,120,120},
         smooth=Smooth.None));
     connect(pow.y, bat_ideal.P) annotation (Line(
-        points={{1,70},{30,70},{30,40.1818}},
+        points={{1,70},{30,70},{30,42}},
         color={0,0,127},
         smooth=Smooth.None));
     connect(fixVol.terminal, bat_loss_acdc.terminal) annotation (Line(
-        points={{-22,0},{0,0},{0,-0.909091},{21.6667,-0.909091}},
+        points={{-22,0},{0,0},{0,0},{20,0}},
         color={0,120,120},
         smooth=Smooth.None));
     connect(fixVol.terminal, bat.terminal) annotation (Line(
-        points={{-22,0},{0,0},{0,-30.9091},{21.6667,-30.9091}},
+        points={{-22,0},{0,0},{0,-30},{20,-30}},
         color={0,120,120},
         smooth=Smooth.None));
     connect(pow.y, bat_loss_acdc.P) annotation (Line(
-        points={{1,70},{50,70},{50,20},{30,20},{30,8.18182}},
+        points={{1,70},{50,70},{50,20},{30,20},{30,10}},
         color={0,0,127},
         smooth=Smooth.None));
     connect(pow.y, bat.P) annotation (Line(
-        points={{1,70},{66,70},{66,-10},{30,-10},{30,-21.8182}},
+        points={{1,70},{66,70},{66,-10},{30,-10},{30,-20}},
         color={0,0,127},
         smooth=Smooth.None));
     annotation (            experiment(
@@ -603,17 +381,16 @@ First implementation.
               {80,-154}})));
     Modelica.Blocks.Interfaces.RealOutput pvpower
       annotation (Placement(transformation(extent={{52,66},{72,86}})));
-    Modelica.Blocks.Interfaces.RealInput Load annotation (Placement(
-          transformation(extent={{-10,-112},{12,-90}}), iconTransformation(
-            extent={{-10,-112},{12,-90}})));
     Modelica.Blocks.Math.Gain gain(k=-1)
       annotation (Placement(transformation(extent={{32,-108},{46,-94}})));
     Modelica.Blocks.Interfaces.RealOutput soc
       annotation (Placement(transformation(extent={{78,-118},{98,-98}})));
+    Modelica.Blocks.Sources.Constant input_for_load(k=600)
+      annotation (Placement(transformation(extent={{-78,-112},{-58,-92}})));
   equation
     connect(grid.terminal,RL. terminal)
                                        annotation (Line(
-        points={{-22,-92.5},{-22,-98},{-34,-98},{-34,-44},{-10.3333,-44}},
+        points={{-22,-94},{-22,-98},{-34,-98},{-34,-44},{-12,-44}},
         color={0,120,120},
         smooth=Smooth.None));
     connect(weaDat.weaBus,HDifTil. weaBus) annotation (Line(
@@ -639,15 +416,13 @@ First implementation.
         color={0,0,127},
         smooth=Smooth.None));
     connect(pvSimple.terminal,RL. terminal) annotation (Line(
-        points={{11.6667,14},{11.6667,12},{-64,12},{-64,-44},{-10.3333,-44}},
+        points={{10,14},{10,12},{-64,12},{-64,-44},{-12,-44}},
         color={0,120,120},
         smooth=Smooth.None));
-    connect(bat_loss_acdc.terminal, RL.terminal) annotation (Line(points={{79.6667,
-            -66.9091},{-18,-66.9091},{-18,-44},{-10.3333,-44}},
-                                                 color={0,120,120}));
-    connect(pvSimple.P, add.u1) annotation (Line(points={{29.1667,21},{52,21},{
-            52,40},{58,40}},
-                      color={0,0,127}));
+    connect(bat_loss_acdc.terminal, RL.terminal) annotation (Line(points={{78,-66},
+            {-18,-66},{-18,-44},{-12,-44}},      color={0,120,120}));
+    connect(pvSimple.P, add.u1) annotation (Line(points={{31,21},{52,21},{52,40},
+            {58,40}}, color={0,0,127}));
     connect(ref1.y, greaterEqual.u2) annotation (Line(points={{140.8,46},{145,
             46},{145,49},{150.8,49}}, color={0,0,127}));
     connect(add.y, greaterEqual.u1) annotation (Line(points={{81,34},{118,34},{
@@ -656,12 +431,10 @@ First implementation.
             {150.8,26}}, color={0,0,127}));
     connect(ref2.y, less.u2) annotation (Line(points={{140.8,18},{145,18},{145,
             21.2},{150.8,21.2}}, color={0,0,127}));
-    connect(bat_loss_acdc.SOC, less1.u1) annotation (Line(points={{97.1667,
-            -61.4545},{118,-61.4545},{118,-40},{154.8,-40}},
-                                         color={0,0,127}));
-    connect(bat_loss_acdc.SOC, greater.u1) annotation (Line(points={{97.1667,
-            -61.4545},{118,-61.4545},{118,-82},{154.8,-82}},
-                                             color={0,0,127}));
+    connect(bat_loss_acdc.SOC, less1.u1) annotation (Line(points={{99,-60},{118,
+            -60},{118,-40},{154.8,-40}}, color={0,0,127}));
+    connect(bat_loss_acdc.SOC, greater.u1) annotation (Line(points={{99,-60},{
+            118,-60},{118,-82},{154.8,-82}}, color={0,0,127}));
     connect(ref3.y, less1.u2) annotation (Line(points={{138.8,-50},{150,-50},{
             150,-44.8},{154.8,-44.8}}, color={0,0,127}));
     connect(ref4.y, greater.u2) annotation (Line(points={{138.8,-90},{150,-90},
@@ -685,35 +458,357 @@ First implementation.
     connect(add.y, switch1.u1) annotation (Line(points={{81,34},{118,34},{118,
             68},{256,68},{256,1},{275,1}}, color={0,0,127}));
     connect(switch1.y, bat_loss_acdc.P) annotation (Line(points={{286.5,-3},{
-            304,-3},{304,-28},{88,-28},{88,-57.8182}},
-                                                  color={0,0,127}));
-    connect(pvSimple.P, pvpower) annotation (Line(points={{29.1667,21},{52,21},
-            {52,40},{46,40},{46,76},{62,76}},
-                                          color={0,0,127}));
-    connect(Load, gain.u)
-      annotation (Line(points={{1,-101},{30.6,-101}}, color={0,0,127}));
+            304,-3},{304,-28},{88,-28},{88,-56}}, color={0,0,127}));
+    connect(pvSimple.P, pvpower) annotation (Line(points={{31,21},{52,21},{52,
+            40},{46,40},{46,76},{62,76}}, color={0,0,127}));
     connect(gain.y, RL.Pow) annotation (Line(points={{46.7,-101},{56,-101},{56,
-            -44},{6.33333,-44}},
-                           color={0,0,127}));
+            -44},{8,-44}}, color={0,0,127}));
     connect(gain.y, add.u2) annotation (Line(points={{46.7,-101},{56,-101},{56,
             28},{58,28}}, color={0,0,127}));
-    connect(bat_loss_acdc.SOC, soc) annotation (Line(points={{97.1667,-61.4545},
-            {104,-61.4545},{104,-92},{88,-92},{88,-108}}, color={0,0,127}));
+    connect(bat_loss_acdc.SOC, soc) annotation (Line(points={{99,-60},{104,-60},
+            {104,-92},{88,-92},{88,-108}},                color={0,0,127}));
+    connect(input_for_load.y, gain.u) annotation (Line(points={{-57,-102},{22,
+            -102},{22,-101},{30.6,-101}}, color={0,0,127}));
     annotation (Diagram(coordinateSystem(extent={{-160,-120},{320,140}})), Icon(
           coordinateSystem(extent={{-160,-120},{320,140}})),
       experiment(StopTime=31536000, __Dymola_Algorithm="Dassl"));
   end PV_Battery;
 
-  model PV_Battery_test
+  model PV_Battery_stategraph "Pv and battery to test"
 
-    PV_Battery pV_Battery
-      annotation (Placement(transformation(extent={{-10,-6},{10,14}})));
-    Modelica.Blocks.Sources.RealExpression realExpression(y=0.6)
-      annotation (Placement(transformation(extent={{-64,4},{-44,24}})));
+    Buildings.Electrical.AC.OnePhase.Loads.Inductive RL(
+      mode=Buildings.Electrical.Types.Load.VariableZ_P_input,
+      P_nominal=-1000,
+      V_nominal=120) "Load taht consumes the power generted by the PVs"
+      annotation (Placement(transformation(extent={{-12,-54},{8,-34}})));
+    Buildings.Electrical.AC.OnePhase.Sources.Grid grid(f=60, V=120)
+      "Electrical grid model"
+             annotation (Placement(transformation(extent={{-30,-94},{-14,-76}})));
+    Buildings.BoundaryConditions.SolarIrradiation.DiffusePerez HDifTil(
+      til=0.34906585039887,
+      lat=0.65798912800186,
+      azi=-0.78539816339745) "Diffuse irradiation on tilted surface"
+      annotation (Placement(transformation(extent={{-76,82},{-62,96}})));
+    Buildings.BoundaryConditions.SolarIrradiation.DirectTiltedSurface HDirTil(
+      til=0.34906585039887,
+      lat=0.65798912800186,
+      azi=-0.78539816339745) "Direct irradiation on tilted surface"
+      annotation (Placement(transformation(extent={{-76,56},{-62,70}})));
+    Buildings.BoundaryConditions.WeatherData.ReaderTMY3 weaDat(
+        computeWetBulbTemperature=false, filNam=
+          "Modelica.Utilities.Files.loadResource(\"modelica://Buildings/Resources/weatherdata/USA_CA_San.Francisco.Intl.APModelica.Utilities.Files.loadResource(\"modelica://Buildings/Resources/weatherdata/USA_CA_San.Francisco.Intl.AP.724940_TMY3.mos\").724940_TMY3.mos\")")
+      annotation (Placement(transformation(extent={{-130,76},{-110,96}})));
+    Modelica.Blocks.Math.Add G "Total irradiation on tilted surface"
+      annotation (Placement(transformation(extent={{-42,72},{-30,84}})));
+    Buildings.Electrical.AC.OnePhase.Sources.PVSimple pvSimple(A=10, V_nominal=
+          120) "PV array simplified"
+      annotation (Placement(transformation(extent={{10,4},{30,24}})));
+    Buildings.Electrical.AC.OnePhase.Storage.Battery bat_loss_acdc(
+      etaCha=1,
+      etaDis=1,
+      SOC_start=0.5,
+      eta_DCAC=0.95,
+      EMax=180000000,
+      V_nominal=120) "Battery with losses for AC/DC conversion"
+      annotation (Placement(transformation(extent={{122,-34},{142,-14}})));
+    Modelica.Blocks.Interfaces.RealInput Load annotation (Placement(
+          transformation(extent={{-182,-10},{-160,12}}),iconTransformation(
+            extent={{-182,-10},{-160,12}})));
+    Modelica.Blocks.Math.Gain gain(k=-1)
+      annotation (Placement(transformation(extent={{34,-108},{48,-94}})));
+    battery_controller battery_controller1
+      annotation (Placement(transformation(extent={{242,-20},{276,8}})));
+    mode_switch mode_switch1
+      annotation (Placement(transformation(extent={{116,30},{146,56}})));
   equation
-    connect(realExpression.y, pV_Battery.TestLoad) annotation (Line(points={{-43,
-            14},{-16,14},{-16,-12.7},{6.7,-12.7}}, color={0,0,127}));
-    annotation (experiment(StopTime=31536000, __Dymola_Algorithm="Dassl"));
-  end PV_Battery_test;
+    connect(grid.terminal,RL. terminal)
+                                       annotation (Line(
+        points={{-22,-94},{-22,-98},{-34,-98},{-34,-44},{-12,-44}},
+        color={0,120,120},
+        smooth=Smooth.None));
+    connect(weaDat.weaBus,HDifTil. weaBus) annotation (Line(
+        points={{-110,86},{-82,86},{-82,89},{-76,89}},
+        color={255,204,51},
+        thickness=0.5,
+        smooth=Smooth.None));
+    connect(weaDat.weaBus,HDirTil. weaBus) annotation (Line(
+        points={{-110,86},{-82,86},{-82,63},{-76,63}},
+        color={255,204,51},
+        thickness=0.5,
+        smooth=Smooth.None));
+    connect(HDifTil.H,G. u1) annotation (Line(
+        points={{-61.3,89},{-54,89},{-54,81.6},{-43.2,81.6}},
+        color={0,0,127},
+        smooth=Smooth.None));
+    connect(HDirTil.H,G. u2) annotation (Line(
+        points={{-61.3,63},{-54,63},{-54,74.4},{-43.2,74.4}},
+        color={0,0,127},
+        smooth=Smooth.None));
+    connect(G.y,pvSimple. G) annotation (Line(
+        points={{-29.4,78},{20,78},{20,26}},
+        color={0,0,127},
+        smooth=Smooth.None));
+    connect(pvSimple.terminal,RL. terminal) annotation (Line(
+        points={{10,14},{10,12},{-64,12},{-64,-44},{-12,-44}},
+        color={0,120,120},
+        smooth=Smooth.None));
+    connect(bat_loss_acdc.terminal, RL.terminal) annotation (Line(points={{122,-24},
+            {-18,-24},{-18,-44},{-12,-44}},      color={0,120,120}));
+    connect(Load, gain.u)
+      annotation (Line(points={{3,-101},{32.6,-101}}, color={0,0,127}));
+    connect(gain.y, RL.Pow) annotation (Line(points={{48.7,-101},{62,-101},{62,
+            -44},{8,-44}}, color={0,0,127}));
+    connect(gain.y, battery_controller1.load) annotation (Line(points={{48.7,
+            -101},{252.1,-101},{252.1,-16.1}}, color={0,0,127}));
+    connect(gain.y, mode_switch1.load) annotation (Line(points={{48.7,-101},{
+            150,-101},{150,24},{106,24},{106,39.1},{114.9,39.1}}, color={0,0,
+            127}));
+    connect(pvSimple.P, mode_switch1.pvpower) annotation (Line(points={{31,21},
+            {110,21},{110,50},{114,50}}, color={0,0,127}));
+    connect(bat_loss_acdc.SOC, mode_switch1.soc) annotation (Line(points={{143,
+            -18},{156,-18},{156,62},{106,62},{106,43.9},{114.9,43.9}}, color={0,
+            0,127}));
+    connect(mode_switch1.y, battery_controller1.u) annotation (Line(points={{
+            147,44.2},{230,44.2},{230,-2.8},{240,-2.8}}, color={255,127,0}));
+    connect(pvSimple.P, battery_controller1.pvpower) annotation (Line(points={{
+            31,21},{139.5,21},{139.5,-12},{248,-12}}, color={0,0,127}));
+    connect(battery_controller1.y_battery, bat_loss_acdc.P) annotation (Line(
+          points={{263,-2},{262,-2},{262,14},{132,14},{132,-14}}, color={0,0,
+            127}));
+    annotation (Diagram(coordinateSystem(extent={{-160,-120},{320,140}})), Icon(
+          coordinateSystem(extent={{-160,-120},{320,140}})),
+      experiment(StopTime=31536000, __Dymola_Algorithm="Dassl"));
+  end PV_Battery_stategraph;
+
+  model mode_switch
+    Modelica.Blocks.Interfaces.RealInput load annotation (Placement(
+          transformation(extent={{-122,20},{-100,42}}), iconTransformation(
+            extent={{-122,-60},{-100,-38}})));
+    Modelica.Blocks.Interfaces.RealInput pvpower annotation (Placement(
+          transformation(extent={{-122,0},{-100,22}}), iconTransformation(
+            extent={{-122,40},{-100,62}})));
+    Modelica.Blocks.Interfaces.RealInput soc annotation (Placement(
+          transformation(extent={{-122,-18},{-100,4}}), iconTransformation(
+            extent={{-122,-12},{-100,10}})));
+    Modelica.StateGraph.InitialStepWithSignal dormant(nIn=2, nOut=2) annotation (
+        Placement(transformation(
+          extent={{-10,10},{10,-10}},
+          rotation=-90,
+          origin={-10,76})));
+    Modelica.StateGraph.StepWithSignal charge(nIn=2, nOut=2) annotation (
+        Placement(transformation(
+          extent={{-10,10},{10,-10}},
+          rotation=-90,
+          origin={-8,-4})));
+    Modelica.StateGraph.StepWithSignal discharge(nIn=2, nOut=2) annotation (
+        Placement(transformation(
+          extent={{10,-10},{-10,10}},
+          rotation=90,
+          origin={-8,-94})));
+    Buildings.Controls.OBC.CDL.Conversions.BooleanToInteger booToIntDor(final
+        integerTrue=Integer(TEES.battery_mode.Dormant), final integerFalse=0)
+      annotation (Placement(transformation(extent={{142,30},{162,50}})));
+    Buildings.Controls.OBC.CDL.Conversions.BooleanToInteger booToIntCha(final
+        integerTrue=Integer(TEES.battery_mode.Charging), final integerFalse=0)
+      annotation (Placement(transformation(extent={{142,-14},{162,6}})));
+    Buildings.Controls.OBC.CDL.Conversions.BooleanToInteger booToIntDis(final
+        integerFalse=0, final integerTrue=Integer(TEES.battery_mode.Discharging))
+      annotation (Placement(transformation(extent={{142,-60},{162,-40}})));
+    Buildings.Controls.OBC.CDL.Integers.MultiSum mulSumInt(nin=3)
+      annotation (Placement(transformation(extent={{176,-14},{196,6}})));
+    Modelica.Blocks.Interfaces.IntegerOutput y "Connector of Integer output signal" annotation (Placement(
+          transformation(extent={{200,-12},{220,8}}),  iconTransformation(extent={{200,-8},
+              {220,12}})));
+    Modelica.StateGraph.Transition dorToCha1(
+      condition=pvpower + load >= 0 and soc <= 0.9,
+      enableTimer=true,
+      waitTime=0)
+      "Dormant to charging mode"
+      annotation (Placement(transformation(
+          extent={{10,-10},{-10,10}},
+          rotation=90,
+          origin={-10,30})));
+    Modelica.StateGraph.Transition chaToDis(
+      condition=pvpower + load < 0,
+      enableTimer=true,
+      waitTime=0)
+      "Charging mode to discharging mode"
+      annotation (Placement(transformation(
+          extent={{10,-10},{-10,10}},
+          rotation=90,
+          origin={-8,-40})));
+    Modelica.StateGraph.Transition disToCha(
+      condition=pvpower + load >= 0,
+      enableTimer=true,
+      waitTime=0)
+      "Discharging mode to charging mode"
+      annotation (Placement(transformation(
+          extent={{-10,-10},{10,10}},
+          rotation=90,
+          origin={28,-64})));
+    Modelica.StateGraph.Transition chaToDor(
+      condition=pvpower + load >= 0 and soc > 0.9,
+      enableTimer=true,
+      waitTime=0)
+      "Charging mode to dormant mode"
+      annotation (Placement(transformation(
+          extent={{-10,-10},{10,10}},
+          rotation=90,
+          origin={62,30})));
+    Modelica.StateGraph.Transition disToDor(
+      condition=pvpower + load < 0 and soc < 0.1,
+      enableTimer=true,
+      waitTime=0)
+      "Discharging mode to dormant mode"
+      annotation (Placement(transformation(
+          extent={{-10,-10},{10,10}},
+          rotation=90,
+          origin={84,-68})));
+    Modelica.StateGraph.Transition dorToDis(
+      condition=pvpower + load < 0 and soc >= 0.1,
+      enableTimer=true,
+      waitTime=0)
+      "Dormant to discharging mode"
+      annotation (Placement(transformation(
+          extent={{10,-10},{-10,10}},
+          rotation=90,
+          origin={-72,6})));
+  equation
+    connect(y, mulSumInt.y) annotation (Line(points={{210,-2},{204,-2},{204,-4},
+            {198,-4}}, color={255,127,0}));
+    connect(y, y)
+      annotation (Line(points={{210,-2},{210,-2}}, color={255,127,0}));
+    connect(dormant.outPort[1], dorToCha1.inPort)
+      annotation (Line(points={{-10,65.5},{-10,34}}, color={0,0,0}));
+    connect(dorToCha1.outPort, charge.inPort[1]) annotation (Line(points={{-10,
+            28.5},{-10,14},{-8,14},{-8,7}}, color={0,0,0}));
+    connect(charge.active, booToIntCha.u)
+      annotation (Line(points={{3,-4},{140,-4}}, color={255,0,255}));
+    connect(discharge.active, booToIntDis.u) annotation (Line(points={{3,-94},{
+            134,-94},{134,-50},{140,-50}}, color={255,0,255}));
+    connect(dormant.active, booToIntDor.u) annotation (Line(points={{1,76},{134,
+            76},{134,40},{140,40}}, color={255,0,255}));
+    connect(charge.outPort[1], chaToDis.inPort) annotation (Line(points={{-8.25,
+            -14.5},{-8.25,-20},{-8,-20},{-8,-36}}, color={0,0,0}));
+    connect(chaToDis.outPort, discharge.inPort[1])
+      annotation (Line(points={{-8,-41.5},{-8,-83}}, color={0,0,0}));
+    connect(discharge.outPort[1], disToCha.inPort) annotation (Line(points={{
+            -8.25,-104.5},{28,-104.5},{28,-68}}, color={0,0,0}));
+    connect(disToCha.outPort, charge.inPort[2]) annotation (Line(points={{28,
+            -62.5},{28,14},{-7.5,14},{-7.5,7}}, color={0,0,0}));
+    connect(booToIntCha.y, mulSumInt.u[1])
+      annotation (Line(points={{164,-4},{174,-4}}, color={255,127,0}));
+    connect(charge.outPort[2], chaToDor.inPort) annotation (Line(points={{-7.75,
+            -14.5},{-7.75,-18},{36,-18},{36,16},{62,16},{62,26}}, color={0,0,0}));
+    connect(chaToDor.outPort, dormant.inPort[1]) annotation (Line(points={{62,
+            31.5},{62,92},{-10.5,92},{-10.5,87}}, color={0,0,0}));
+    connect(discharge.outPort[2], disToDor.inPort) annotation (Line(points={{
+            -7.75,-104.5},{2,-104.5},{2,-104},{28,-104},{28,-86},{84,-86},{84,
+            -72}}, color={0,0,0}));
+    connect(disToDor.outPort, dormant.inPort[2]) annotation (Line(points={{84,
+            -66.5},{84,106},{-9.5,106},{-9.5,87}}, color={0,0,0}));
+    connect(dorToDis.outPort, discharge.inPort[2]) annotation (Line(points={{
+            -72,4.5},{-72,-66},{-8,-66},{-8,-84}}, color={0,0,0}));
+    connect(dormant.outPort[2], dorToDis.inPort) annotation (Line(points={{-10,
+            65.5},{-10,44},{-72,44},{-72,10}}, color={0,0,0}));
+    connect(booToIntDor.y, mulSumInt.u[2]) annotation (Line(points={{164,40},{
+            172,40},{172,6},{168,6},{168,-4},{174,-4}}, color={255,127,0}));
+    connect(booToIntDis.y, mulSumInt.u[3]) annotation (Line(points={{164,-50},{
+            166,-50},{166,-48},{172,-48},{172,-4},{174,-4}}, color={255,127,0}));
+    annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,
+              -140},{200,120}})), Diagram(coordinateSystem(preserveAspectRatio=
+              false, extent={{-100,-140},{200,120}})));
+  end mode_switch;
+
+  type battery_mode = enumeration(
+      Dormant "Not engaged in operation",
+      Charging "Charing mode",
+      Discharging "Discharging mode") "Operation modes";
+  model battery_controller "change model for the battery"
+    Modelica.Blocks.Interfaces.IntegerInput u "Storage mode"
+      annotation (Placement(transformation(extent={{-140,12},{-100,52}})));
+    Modelica.Blocks.Interfaces.RealInput load annotation (Placement(
+          transformation(extent={{-122,-34},{-100,-12}}),
+                                                        iconTransformation(
+            extent={{10,-68},{32,-46}})));
+    Modelica.Blocks.Interfaces.RealInput pvpower annotation (Placement(
+          transformation(extent={{-122,-60},{-100,-38}}), iconTransformation(
+            extent={{-60,-66},{-38,-44}})));
+    Buildings.Controls.OBC.CDL.Integers.Equal isDor "Is dormant"
+      annotation (Placement(transformation(extent={{22,22},{42,42}})));
+    Modelica.Blocks.Sources.IntegerExpression dorMod(y=Integer(TEES.battery_mode.Dormant))
+      "Dormant mode"
+      annotation (Placement(transformation(extent={{-20,-4},{0,16}})));
+    Modelica.Blocks.Logical.Switch swi "Switch"
+      annotation (Placement(transformation(extent={{148,22},{168,42}})));
+    Modelica.Blocks.Sources.Constant zer(k=0) "Zero"
+      annotation (Placement(transformation(extent={{22,76},{42,96}})));
+    Modelica.Blocks.Math.Add add
+      annotation (Placement(transformation(extent={{22,-46},{42,-26}})));
+    Modelica.Blocks.Interfaces.RealOutput y_battery(
+      final quantity="1",
+      min=0,
+      max=1) annotation (Placement(transformation(extent={{240,22},{260,42}}),
+          iconTransformation(extent={{100,30},{120,50}})));
+    Modelica.Blocks.Math.Gain gain(k=-1)
+      annotation (Placement(transformation(extent={{-60,-30},{-46,-16}})));
+  equation
+    connect(dorMod.y, isDor.u2) annotation (Line(points={{1,6},{10,6},{10,24},{
+            20,24}}, color={255,127,0}));
+    connect(u, isDor.u1)
+      annotation (Line(points={{-120,32},{20,32}}, color={255,127,0}));
+    connect(isDor.y, swi.u2)
+      annotation (Line(points={{44,32},{146,32}}, color={255,0,255}));
+    connect(zer.y, swi.u1) annotation (Line(points={{43,86},{136,86},{136,40},{
+            146,40}}, color={0,0,127}));
+    connect(pvpower, add.u2) annotation (Line(points={{-111,-49},{12,-49},{12,
+            -42},{20,-42}}, color={0,0,127}));
+    connect(add.y, swi.u3) annotation (Line(points={{43,-36},{136,-36},{136,24},
+            {146,24}}, color={0,0,127}));
+    connect(swi.y, y_battery)
+      annotation (Line(points={{169,32},{250,32}}, color={0,0,127}));
+    connect(load, gain.u)
+      annotation (Line(points={{-111,-23},{-61.4,-23}}, color={0,0,127}));
+    connect(gain.y, add.u1) annotation (Line(points={{-45.3,-23},{12,-23},{12,
+            -30},{20,-30}}, color={0,0,127}));
+    annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,
+              -140},{240,140}}), graphics={
+          Polygon(
+            points={{36,56},{36,-6},{10,-6},{-12,56},{36,56}},
+            smooth=Smooth.None,
+            pattern=LinePattern.None,
+            lineColor={0,0,0},
+            fillColor={0,127,0},
+            fillPattern=FillPattern.Solid),
+          Polygon(
+            points={{-28,56},{-6,-6},{-26,-6},{-48,56},{-28,56}},
+            smooth=Smooth.None,
+            pattern=LinePattern.None,
+            lineColor={0,0,0},
+            fillColor={0,127,0},
+            fillPattern=FillPattern.Solid),
+          Polygon(
+            points={{-62,56},{-40,-6},{-60,-6},{-82,56},{-62,56}},
+            smooth=Smooth.None,
+            pattern=LinePattern.None,
+            lineColor={0,0,0},
+            fillColor={0,127,0},
+            fillPattern=FillPattern.Solid)}), Diagram(coordinateSystem(
+            preserveAspectRatio=false, extent={{-100,-140},{240,140}})));
+  end battery_controller;
+
+  model state_graph_test
+    PV_Battery_stategraph pV_Battery_stategraph
+      annotation (Placement(transformation(extent={{-30,8},{18,36}})));
+    Modelica.Blocks.Sources.Constant input_for_load(k=600)
+      annotation (Placement(transformation(extent={{-76,12},{-56,32}})));
+  equation
+    connect(input_for_load.y, pV_Battery_stategraph.Load)
+      annotation (Line(points={{-55,22},{-32,22}}, color={0,0,127}));
+    annotation (
+      Icon(coordinateSystem(preserveAspectRatio=false)),
+      Diagram(coordinateSystem(preserveAspectRatio=false)),
+      experiment(StopTime=31536000, __Dymola_Algorithm="Dassl"));
+  end state_graph_test;
   annotation (uses(Modelica(version="4.0.0"), Buildings(version="8.0.0")));
 end TEES;
