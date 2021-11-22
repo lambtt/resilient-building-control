@@ -37,27 +37,27 @@ package TEES
       annotation (Placement(transformation(extent={{20,-40},{40,-20}})));
   equation
     connect(fixVol.terminal, bat_ideal.terminal) annotation (Line(
-        points={{-22,0},{0,0},{0,32},{20,32}},
+        points={{-22,0},{0,0},{0,31.0909},{21.6667,31.0909}},
         color={0,120,120},
         smooth=Smooth.None));
     connect(pow.y, bat_ideal.P) annotation (Line(
-        points={{1,70},{30,70},{30,42}},
+        points={{1,70},{30,70},{30,40.1818}},
         color={0,0,127},
         smooth=Smooth.None));
     connect(fixVol.terminal, bat_loss_acdc.terminal) annotation (Line(
-        points={{-22,0},{0,0},{0,0},{20,0}},
+        points={{-22,0},{0,0},{0,-0.909091},{21.6667,-0.909091}},
         color={0,120,120},
         smooth=Smooth.None));
     connect(fixVol.terminal, bat.terminal) annotation (Line(
-        points={{-22,0},{0,0},{0,-30},{20,-30}},
+        points={{-22,0},{0,0},{0,-30.9091},{21.6667,-30.9091}},
         color={0,120,120},
         smooth=Smooth.None));
     connect(pow.y, bat_loss_acdc.P) annotation (Line(
-        points={{1,70},{50,70},{50,20},{30,20},{30,10}},
+        points={{1,70},{50,70},{50,20},{30,20},{30,8.18182}},
         color={0,0,127},
         smooth=Smooth.None));
     connect(pow.y, bat.P) annotation (Line(
-        points={{1,70},{66,70},{66,-10},{30,-10},{30,-20}},
+        points={{1,70},{66,70},{66,-10},{30,-10},{30,-21.8182}},
         color={0,0,127},
         smooth=Smooth.None));
     annotation (            experiment(
@@ -385,12 +385,14 @@ First implementation.
       annotation (Placement(transformation(extent={{32,-108},{46,-94}})));
     Modelica.Blocks.Interfaces.RealOutput soc
       annotation (Placement(transformation(extent={{78,-118},{98,-98}})));
-    Modelica.Blocks.Sources.Constant input_for_load(k=600)
-      annotation (Placement(transformation(extent={{-78,-112},{-58,-92}})));
+    Modelica.Blocks.Interfaces.RealInput Load annotation (Placement(
+          transformation(extent={{-116,-108},{-98,-90}}),
+                                                        iconTransformation(
+            extent={{-182,-28},{-160,-6}})));
   equation
     connect(grid.terminal,RL. terminal)
                                        annotation (Line(
-        points={{-22,-94},{-22,-98},{-34,-98},{-34,-44},{-12,-44}},
+        points={{-22,-92.5},{-22,-98},{-34,-98},{-34,-44},{-10.3333,-44}},
         color={0,120,120},
         smooth=Smooth.None));
     connect(weaDat.weaBus,HDifTil. weaBus) annotation (Line(
@@ -416,13 +418,15 @@ First implementation.
         color={0,0,127},
         smooth=Smooth.None));
     connect(pvSimple.terminal,RL. terminal) annotation (Line(
-        points={{10,14},{10,12},{-64,12},{-64,-44},{-12,-44}},
+        points={{11.6667,14},{11.6667,12},{-64,12},{-64,-44},{-10.3333,-44}},
         color={0,120,120},
         smooth=Smooth.None));
-    connect(bat_loss_acdc.terminal, RL.terminal) annotation (Line(points={{78,-66},
-            {-18,-66},{-18,-44},{-12,-44}},      color={0,120,120}));
-    connect(pvSimple.P, add.u1) annotation (Line(points={{31,21},{52,21},{52,40},
-            {58,40}}, color={0,0,127}));
+    connect(bat_loss_acdc.terminal, RL.terminal) annotation (Line(points={{79.6667,
+            -66.9091},{-18,-66.9091},{-18,-44},{-10.3333,-44}},
+                                                 color={0,120,120}));
+    connect(pvSimple.P, add.u1) annotation (Line(points={{29.1667,21},{52,21},{
+            52,40},{58,40}},
+                      color={0,0,127}));
     connect(ref1.y, greaterEqual.u2) annotation (Line(points={{140.8,46},{145,
             46},{145,49},{150.8,49}}, color={0,0,127}));
     connect(add.y, greaterEqual.u1) annotation (Line(points={{81,34},{118,34},{
@@ -431,10 +435,12 @@ First implementation.
             {150.8,26}}, color={0,0,127}));
     connect(ref2.y, less.u2) annotation (Line(points={{140.8,18},{145,18},{145,
             21.2},{150.8,21.2}}, color={0,0,127}));
-    connect(bat_loss_acdc.SOC, less1.u1) annotation (Line(points={{99,-60},{118,
-            -60},{118,-40},{154.8,-40}}, color={0,0,127}));
-    connect(bat_loss_acdc.SOC, greater.u1) annotation (Line(points={{99,-60},{
-            118,-60},{118,-82},{154.8,-82}}, color={0,0,127}));
+    connect(bat_loss_acdc.SOC, less1.u1) annotation (Line(points={{97.1667,
+            -61.4545},{118,-61.4545},{118,-40},{154.8,-40}},
+                                         color={0,0,127}));
+    connect(bat_loss_acdc.SOC, greater.u1) annotation (Line(points={{97.1667,
+            -61.4545},{118,-61.4545},{118,-82},{154.8,-82}},
+                                             color={0,0,127}));
     connect(ref3.y, less1.u2) annotation (Line(points={{138.8,-50},{150,-50},{
             150,-44.8},{154.8,-44.8}}, color={0,0,127}));
     connect(ref4.y, greater.u2) annotation (Line(points={{138.8,-90},{150,-90},
@@ -458,17 +464,20 @@ First implementation.
     connect(add.y, switch1.u1) annotation (Line(points={{81,34},{118,34},{118,
             68},{256,68},{256,1},{275,1}}, color={0,0,127}));
     connect(switch1.y, bat_loss_acdc.P) annotation (Line(points={{286.5,-3},{
-            304,-3},{304,-28},{88,-28},{88,-56}}, color={0,0,127}));
-    connect(pvSimple.P, pvpower) annotation (Line(points={{31,21},{52,21},{52,
-            40},{46,40},{46,76},{62,76}}, color={0,0,127}));
+            304,-3},{304,-28},{88,-28},{88,-57.8182}},
+                                                  color={0,0,127}));
+    connect(pvSimple.P, pvpower) annotation (Line(points={{29.1667,21},{52,21},
+            {52,40},{46,40},{46,76},{62,76}},
+                                          color={0,0,127}));
     connect(gain.y, RL.Pow) annotation (Line(points={{46.7,-101},{56,-101},{56,
-            -44},{8,-44}}, color={0,0,127}));
+            -44},{6.33333,-44}},
+                           color={0,0,127}));
     connect(gain.y, add.u2) annotation (Line(points={{46.7,-101},{56,-101},{56,
             28},{58,28}}, color={0,0,127}));
-    connect(bat_loss_acdc.SOC, soc) annotation (Line(points={{99,-60},{104,-60},
-            {104,-92},{88,-92},{88,-108}},                color={0,0,127}));
-    connect(input_for_load.y, gain.u) annotation (Line(points={{-57,-102},{22,
-            -102},{22,-101},{30.6,-101}}, color={0,0,127}));
+    connect(bat_loss_acdc.SOC, soc) annotation (Line(points={{97.1667,-61.4545},
+            {104,-61.4545},{104,-92},{88,-92},{88,-108}}, color={0,0,127}));
+    connect(gain.u, Load) annotation (Line(points={{30.6,-101},{-92,-101},{-92,
+            -99},{-107,-99}}, color={0,0,127}));
     annotation (Diagram(coordinateSystem(extent={{-160,-120},{320,140}})), Icon(
           coordinateSystem(extent={{-160,-120},{320,140}})),
       experiment(StopTime=31536000, __Dymola_Algorithm="Dassl"));
@@ -496,7 +505,7 @@ First implementation.
       annotation (Placement(transformation(extent={{-76,56},{-62,70}})));
     Buildings.BoundaryConditions.WeatherData.ReaderTMY3 weaDat(
         computeWetBulbTemperature=false, filNam=
-          "Modelica.Utilities.Files.loadResource(\"modelica://Buildings/Resources/weatherdata/USA_CA_San.Francisco.Intl.APModelica.Utilities.Files.loadResource(\"modelica://Buildings/Resources/weatherdata/USA_CA_San.Francisco.Intl.AP.724940_TMY3.mos\").724940_TMY3.mos\")")
+          "D:/CoderLife/resilient-building-control/ElectricalModel/weather/USA_TX_Dallas-Love.Field.722583_TMY3.mos")
       annotation (Placement(transformation(extent={{-130,76},{-110,96}})));
     Modelica.Blocks.Math.Add G "Total irradiation on tilted surface"
       annotation (Placement(transformation(extent={{-42,72},{-30,84}})));
@@ -512,8 +521,8 @@ First implementation.
       V_nominal=120) "Battery with losses for AC/DC conversion"
       annotation (Placement(transformation(extent={{122,-34},{142,-14}})));
     Modelica.Blocks.Interfaces.RealInput Load annotation (Placement(
-          transformation(extent={{-182,-10},{-160,12}}),iconTransformation(
-            extent={{-182,-10},{-160,12}})));
+          transformation(extent={{-182,-28},{-160,-6}}),iconTransformation(
+            extent={{-182,-28},{-160,-6}})));
     Modelica.Blocks.Math.Gain gain(k=-1)
       annotation (Placement(transformation(extent={{34,-108},{48,-94}})));
     battery_controller battery_controller1
@@ -523,7 +532,7 @@ First implementation.
   equation
     connect(grid.terminal,RL. terminal)
                                        annotation (Line(
-        points={{-22,-94},{-22,-98},{-34,-98},{-34,-44},{-12,-44}},
+        points={{-22,-92.5},{-22,-98},{-34,-98},{-34,-44},{-10.3333,-44}},
         color={0,120,120},
         smooth=Smooth.None));
     connect(weaDat.weaBus,HDifTil. weaBus) annotation (Line(
@@ -549,31 +558,38 @@ First implementation.
         color={0,0,127},
         smooth=Smooth.None));
     connect(pvSimple.terminal,RL. terminal) annotation (Line(
-        points={{10,14},{10,12},{-64,12},{-64,-44},{-12,-44}},
+        points={{11.6667,14},{11.6667,12},{-64,12},{-64,-44},{-10.3333,-44}},
         color={0,120,120},
         smooth=Smooth.None));
-    connect(bat_loss_acdc.terminal, RL.terminal) annotation (Line(points={{122,-24},
-            {-18,-24},{-18,-44},{-12,-44}},      color={0,120,120}));
+    connect(bat_loss_acdc.terminal, RL.terminal) annotation (Line(points={{123.667,
+            -24.9091},{-18,-24.9091},{-18,-44},{-10.3333,-44}},
+                                                 color={0,120,120}));
     connect(Load, gain.u)
-      annotation (Line(points={{3,-101},{32.6,-101}}, color={0,0,127}));
+      annotation (Line(points={{-171,-17},{-66,-17},{-66,-101},{32.6,-101}},
+                                                      color={0,0,127}));
     connect(gain.y, RL.Pow) annotation (Line(points={{48.7,-101},{62,-101},{62,
-            -44},{8,-44}}, color={0,0,127}));
+            -44},{6.33333,-44}},
+                           color={0,0,127}));
     connect(gain.y, battery_controller1.load) annotation (Line(points={{48.7,
-            -101},{252.1,-101},{252.1,-16.1}}, color={0,0,127}));
+            -101},{254.7,-101},{254.7,-10.7}}, color={0,0,127}));
     connect(gain.y, mode_switch1.load) annotation (Line(points={{48.7,-101},{
             150,-101},{150,24},{106,24},{106,39.1},{114.9,39.1}}, color={0,0,
             127}));
-    connect(pvSimple.P, mode_switch1.pvpower) annotation (Line(points={{31,21},
-            {110,21},{110,50},{114,50}}, color={0,0,127}));
-    connect(bat_loss_acdc.SOC, mode_switch1.soc) annotation (Line(points={{143,
-            -18},{156,-18},{156,62},{106,62},{106,43.9},{114.9,43.9}}, color={0,
+    connect(pvSimple.P, mode_switch1.pvpower) annotation (Line(points={{29.1667,
+            21},{110,21},{110,49.1},{114.9,49.1}},
+                                         color={0,0,127}));
+    connect(bat_loss_acdc.SOC, mode_switch1.soc) annotation (Line(points={{141.167,
+            -19.4545},{156,-19.4545},{156,62},{106,62},{106,43.9},{114.9,43.9}},
+                                                                       color={0,
             0,127}));
     connect(mode_switch1.y, battery_controller1.u) annotation (Line(points={{
             147,44.2},{230,44.2},{230,-2.8},{240,-2.8}}, color={255,127,0}));
-    connect(pvSimple.P, battery_controller1.pvpower) annotation (Line(points={{
-            31,21},{139.5,21},{139.5,-12},{248,-12}}, color={0,0,127}));
+    connect(pvSimple.P, battery_controller1.pvpower) annotation (Line(points={{29.1667,
+            21},{139.5,21},{139.5,-10.5},{247.3,-10.5}},
+                                                      color={0,0,127}));
     connect(battery_controller1.y_battery, bat_loss_acdc.P) annotation (Line(
-          points={{263,-2},{262,-2},{262,14},{132,14},{132,-14}}, color={0,0,
+          points={{263,-2},{262,-2},{262,14},{132,14},{132,-15.8182}},
+                                                                  color={0,0,
             127}));
     annotation (Diagram(coordinateSystem(extent={{-160,-120},{320,140}})), Icon(
           coordinateSystem(extent={{-160,-120},{320,140}})),
@@ -622,7 +638,7 @@ First implementation.
     Modelica.StateGraph.Transition dorToCha1(
       condition=pvpower + load >= 0 and soc <= 0.9,
       enableTimer=true,
-      waitTime=0)
+      waitTime=60)
       "Dormant to charging mode"
       annotation (Placement(transformation(
           extent={{10,-10},{-10,10}},
@@ -631,7 +647,7 @@ First implementation.
     Modelica.StateGraph.Transition chaToDis(
       condition=pvpower + load < 0,
       enableTimer=true,
-      waitTime=0)
+      waitTime=60)
       "Charging mode to discharging mode"
       annotation (Placement(transformation(
           extent={{10,-10},{-10,10}},
@@ -640,7 +656,7 @@ First implementation.
     Modelica.StateGraph.Transition disToCha(
       condition=pvpower + load >= 0,
       enableTimer=true,
-      waitTime=0)
+      waitTime=60)
       "Discharging mode to charging mode"
       annotation (Placement(transformation(
           extent={{-10,-10},{10,10}},
@@ -649,7 +665,7 @@ First implementation.
     Modelica.StateGraph.Transition chaToDor(
       condition=pvpower + load >= 0 and soc > 0.9,
       enableTimer=true,
-      waitTime=0)
+      waitTime=60)
       "Charging mode to dormant mode"
       annotation (Placement(transformation(
           extent={{-10,-10},{10,10}},
@@ -658,7 +674,7 @@ First implementation.
     Modelica.StateGraph.Transition disToDor(
       condition=pvpower + load < 0 and soc < 0.1,
       enableTimer=true,
-      waitTime=0)
+      waitTime=60)
       "Discharging mode to dormant mode"
       annotation (Placement(transformation(
           extent={{-10,-10},{10,10}},
@@ -667,7 +683,7 @@ First implementation.
     Modelica.StateGraph.Transition dorToDis(
       condition=pvpower + load < 0 and soc >= 0.1,
       enableTimer=true,
-      waitTime=0)
+      waitTime=60)
       "Dormant to discharging mode"
       annotation (Placement(transformation(
           extent={{10,-10},{-10,10}},
@@ -679,9 +695,11 @@ First implementation.
     connect(y, y)
       annotation (Line(points={{210,-2},{210,-2}}, color={255,127,0}));
     connect(dormant.outPort[1], dorToCha1.inPort)
-      annotation (Line(points={{-10,65.5},{-10,34}}, color={0,0,0}));
+      annotation (Line(points={{-10.25,65.5},{-10.25,50},{-10,50},{-10,34}},
+                                                     color={0,0,0}));
     connect(dorToCha1.outPort, charge.inPort[1]) annotation (Line(points={{-10,
-            28.5},{-10,14},{-8,14},{-8,7}}, color={0,0,0}));
+            28.5},{-10,14},{-8.5,14},{-8.5,7}},
+                                            color={0,0,0}));
     connect(charge.active, booToIntCha.u)
       annotation (Line(points={{3,-4},{140,-4}}, color={255,0,255}));
     connect(discharge.active, booToIntDis.u) annotation (Line(points={{3,-94},{
@@ -691,13 +709,15 @@ First implementation.
     connect(charge.outPort[1], chaToDis.inPort) annotation (Line(points={{-8.25,
             -14.5},{-8.25,-20},{-8,-20},{-8,-36}}, color={0,0,0}));
     connect(chaToDis.outPort, discharge.inPort[1])
-      annotation (Line(points={{-8,-41.5},{-8,-83}}, color={0,0,0}));
+      annotation (Line(points={{-8,-41.5},{-8,-62},{-8,-83},{-8.5,-83}},
+                                                     color={0,0,0}));
     connect(discharge.outPort[1], disToCha.inPort) annotation (Line(points={{
             -8.25,-104.5},{28,-104.5},{28,-68}}, color={0,0,0}));
     connect(disToCha.outPort, charge.inPort[2]) annotation (Line(points={{28,
             -62.5},{28,14},{-7.5,14},{-7.5,7}}, color={0,0,0}));
     connect(booToIntCha.y, mulSumInt.u[1])
-      annotation (Line(points={{164,-4},{174,-4}}, color={255,127,0}));
+      annotation (Line(points={{164,-4},{170,-4},{170,0.666667},{174,0.666667}},
+                                                   color={255,127,0}));
     connect(charge.outPort[2], chaToDor.inPort) annotation (Line(points={{-7.75,
             -14.5},{-7.75,-18},{36,-18},{36,16},{62,16},{62,26}}, color={0,0,0}));
     connect(chaToDor.outPort, dormant.inPort[1]) annotation (Line(points={{62,
@@ -707,14 +727,16 @@ First implementation.
             -72}}, color={0,0,0}));
     connect(disToDor.outPort, dormant.inPort[2]) annotation (Line(points={{84,
             -66.5},{84,106},{-9.5,106},{-9.5,87}}, color={0,0,0}));
-    connect(dorToDis.outPort, discharge.inPort[2]) annotation (Line(points={{
-            -72,4.5},{-72,-66},{-8,-66},{-8,-84}}, color={0,0,0}));
-    connect(dormant.outPort[2], dorToDis.inPort) annotation (Line(points={{-10,
-            65.5},{-10,44},{-72,44},{-72,10}}, color={0,0,0}));
+    connect(dorToDis.outPort, discharge.inPort[2]) annotation (Line(points={{-72,4.5},
+            {-72,-66},{-7.5,-66},{-7.5,-83}},      color={0,0,0}));
+    connect(dormant.outPort[2], dorToDis.inPort) annotation (Line(points={{-9.75,
+            65.5},{-9.75,44},{-72,44},{-72,10}},
+                                               color={0,0,0}));
     connect(booToIntDor.y, mulSumInt.u[2]) annotation (Line(points={{164,40},{
             172,40},{172,6},{168,6},{168,-4},{174,-4}}, color={255,127,0}));
     connect(booToIntDis.y, mulSumInt.u[3]) annotation (Line(points={{164,-50},{
-            166,-50},{166,-48},{172,-48},{172,-4},{174,-4}}, color={255,127,0}));
+            166,-50},{166,-48},{172,-48},{172,-8.66667},{174,-8.66667}},
+                                                             color={255,127,0}));
     annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,
               -140},{200,120}})), Diagram(coordinateSystem(preserveAspectRatio=
               false, extent={{-100,-140},{200,120}})));
@@ -730,10 +752,10 @@ First implementation.
     Modelica.Blocks.Interfaces.RealInput load annotation (Placement(
           transformation(extent={{-122,-34},{-100,-12}}),
                                                         iconTransformation(
-            extent={{10,-68},{32,-46}})));
+            extent={{16,-58},{38,-36}})));
     Modelica.Blocks.Interfaces.RealInput pvpower annotation (Placement(
           transformation(extent={{-122,-60},{-100,-38}}), iconTransformation(
-            extent={{-60,-66},{-38,-44}})));
+            extent={{-58,-56},{-36,-34}})));
     Buildings.Controls.OBC.CDL.Integers.Equal isDor "Is dormant"
       annotation (Placement(transformation(extent={{22,22},{42,42}})));
     Modelica.Blocks.Sources.IntegerExpression dorMod(y=Integer(TEES.battery_mode.Dormant))
@@ -804,7 +826,8 @@ First implementation.
       annotation (Placement(transformation(extent={{-76,12},{-56,32}})));
   equation
     connect(input_for_load.y, pV_Battery_stategraph.Load)
-      annotation (Line(points={{-55,22},{-32,22}}, color={0,0,127}));
+      annotation (Line(points={{-55,22},{-44,22},{-44,21.0308},{-31.1,21.0308}},
+                                                   color={0,0,127}));
     annotation (
       Icon(coordinateSystem(preserveAspectRatio=false)),
       Diagram(coordinateSystem(preserveAspectRatio=false)),
