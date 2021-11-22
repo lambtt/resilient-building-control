@@ -1,5 +1,5 @@
-# co-simulation_fmus
-co-simulation between e+ and dymola
+# sequential-simulation_fmus
 
-This branch is for state-graph control in models.
-When finished, it need to be merged into the master branch.
+Please use TEES's PV Battery (not in state graph logic) as FMU model, and use the python code "4-test-simu-sequence/simu_sequence.py"
+
+
