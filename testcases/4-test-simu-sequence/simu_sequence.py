@@ -14,6 +14,7 @@ pv_battery_input_names = list(pv_battery.get_model_variables(causality=2).keys()
 pv_battery_output_names = list(pv_battery.get_model_variables(causality=3).keys())
 print("*****modelica_input__output*****", pv_battery_input_names, pv_battery_output_names)
 # time settings
+# by setting idf_steps_per_hour, you could set the resolution for E+ and Modelica.
 time_stop = 30 * 24 * 3600
 ts = 0 * 24 * 3600
 te = ts + time_stop
