@@ -14,3 +14,6 @@
 *.txt
 *.mat
 
+# python virtual environment
+#############################
+*_pycache_*

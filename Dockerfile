@@ -63,16 +63,15 @@ RUN cd /usr/local/bin \
 RUN ["ln", "-s", "/usr/local/EnergyPlus-9-4-0/Energy+.idd", "/usr/local/Energy+.idd"]
 
 VOLUME /var/simdata
-WORKDIR /var/simdata
-
-
 CMD [ "/bin/bash" ]
-
 
 ### ===========================================================================================
 ### install testcase dependency
 # install Modelica dependency
 COPY ./libraries /usr/local/JModelica/ThirdParty/MSL
+
+### install EnergyPlusToFMU
+COPY ./EnergyPlusToFMU-v3.1.0 $HOME/EnergyPlusToFMU-v3.1.0
 
 ### =============================
 USER developer
