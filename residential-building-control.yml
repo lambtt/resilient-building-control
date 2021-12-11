@@ -1,1 +1,12 @@
-temp
+name: res-building-control
+channels:
+  - pytorch
+  - dglteam
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.8
+  - pip
+  - pyfmi
+  - casadi
+  - scikit-learn
