@@ -58,3 +58,15 @@ If docker is installed and runing, then
 ## 2.2 Docker Environment
 Docker image is needs to be instantiated for each run. An example is provided in `/testcases/2-test-modelica-fmu/docker-example`.
 
+1. Direct to the root of this repository, and open a terminal. 
+2. Run the test example by:
+
+    - compile the `test.mo` file in the jmdoelica docker, a `test.fmu` file will be successfully generated after compilation.
+
+          bash compile.sh
+
+    - simulate the generated fmu in jmodelica docker 
+
+          bash simulate.sh
+
+
