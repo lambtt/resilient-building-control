@@ -17,3 +17,6 @@
 # python virtual environment
 #############################
 *_pycache_*
+
+# vscode
+.vscode
